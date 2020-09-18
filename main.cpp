@@ -40,12 +40,12 @@ public:
       cout << "Incorrect entry of kopecks.\nAn instance will be created with 0 "
               "kopecks.\n";
       b = 0;
-    }
+    };
     rubles = a, kopecks = b;
     if (kopecks >= 100) {
       rubles += kopecks / 100;
       kopecks %= 100;
-    }
+    };
   };
 };
 
@@ -56,7 +56,7 @@ Money operator+(Money money1, Money money2) {
   if (money.kopecks >= 100) {
     money.rubles += money.kopecks / 100;
     money.kopecks %= 100;
-  }
+  };
   return money;
 };
 
@@ -74,8 +74,8 @@ Money operator-(Money money1, Money money2) {
       money.kopecks = 100 + money1.kopecks - money2.kopecks;
     } else {
       money.kopecks = money1.kopecks - money2.kopecks;
-    }
-  }
+    };
+  };
   return money;
 };
 
@@ -89,7 +89,7 @@ Money operator/(Money money1, double number) {
   money2.rubles = value / 100;
   money2.kopecks = value % 100;
   return money2;
-}
+};
 
 double operator/(Money money1, Money money2) {
   if (money2.rubles == 0 && money2.kopecks == 0) {
@@ -98,7 +98,7 @@ double operator/(Money money1, Money money2) {
   unsigned long long money_left = money1.rubles * 100 + money1.kopecks;
   unsigned long long money_right = money2.rubles * 100 + money2.kopecks;
   return (money_left * 1.0) / money_right;
-}
+};
 
 void Money::printMoney() { cout << rubles << "," << (int)kopecks; };
 
