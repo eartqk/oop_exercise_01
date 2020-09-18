@@ -22,6 +22,12 @@ public:
   void printMoney();
   unsigned long long getRubles();
   unsigned int getKopecks();
+  friend bool operator==(Money money1, Money money2);
+  friend bool operator!=(Money money1, Money money2);
+  friend bool operator>(Money money1, Money money2);
+  friend bool operator>=(Money money1, Money money2);
+  friend bool operator<(Money money1, Money money2);
+  friend bool operator<=(Money money1, Money money2);
   friend Money operator+(Money money1, Money money2);
   friend Money operator-(Money money1, Money money2);
   friend Money operator*(Money money1, double number);
@@ -48,6 +54,32 @@ public:
       kopecks %= 100;
     };
   };
+};
+
+bool operator==(Money money1, Money money2) {
+  return (money1.rubles == money2.rubles && money1.kopecks == money2.kopecks);
+};
+
+bool operator!=(Money money1, Money money2) {
+  return !(money1.rubles == money2.rubles && money1.kopecks == money2.kopecks);
+};
+
+bool operator>(Money money1, Money money2) {
+  return ((money1.rubles > money2.rubles) ||
+          (money1.rubles == money2.rubles && money1.kopecks > money2.kopecks));
+};
+
+bool operator>=(Money money1, Money money2) {
+  return (money1 == money2 || money1 > money2);
+};
+
+bool operator<(Money money1, Money money2) {
+  return ((money1.rubles < money2.rubles) ||
+          (money1.rubles == money2.rubles && money1.kopecks < money2.kopecks));
+};
+
+bool operator<=(Money money1, Money money2) {
+  return (money1 == money2 || money1 < money2);
 };
 
 Money operator+(Money money1, Money money2) {
@@ -84,19 +116,19 @@ Money operator*(Money money1, double number) {
   if (number <= 0) {
     cout << "You can't multiply by zero and negative numbers.\n";
     return money1;
-  }
+  };
   unsigned int value = (money1.rubles * 100 + money1.kopecks) * number;
   Money money2;
   money2.rubles = value / 100;
   money2.kopecks = value % 100;
   return money2;
-}
+};
 
 Money operator/(Money money1, double number) {
   if (number <= 0) {
     cout << "You can't divide by zero and negative numbers.\n";
     return money1;
-  }
+  };
   unsigned int value = (money1.rubles * 100 + money1.kopecks) / number;
   Money money2;
   money2.rubles = value / 100;
@@ -107,7 +139,7 @@ Money operator/(Money money1, double number) {
 double operator/(Money money1, Money money2) {
   if (money2.rubles == 0 && money2.kopecks == 0) {
     cout << "You can't divide by zero.\n";
-  }
+  };
   unsigned long long money_left = money1.rubles * 100 + money1.kopecks;
   unsigned long long money_right = money2.rubles * 100 + money2.kopecks;
   return (money_left * 1.0) / money_right;
