@@ -22,6 +22,8 @@ public:
   void printMoney();
   unsigned long long getRubles();
   unsigned int getKopecks();
+  void setAmount(unsigned long long rubles, unsigned int kopecks);
+  void addAmount(unsigned long long rub, unsigned int kop);
   friend bool operator==(Money money1, Money money2);
   friend bool operator!=(Money money1, Money money2);
   friend bool operator>(Money money1, Money money2);
@@ -145,11 +147,31 @@ double operator/(Money money1, Money money2) {
   return (money_left * 1.0) / money_right;
 };
 
-void Money::printMoney() { cout << rubles << "," << (int)kopecks; };
+void Money::printMoney() { cout << rubles << "," << (int)kopecks << "\n"; };
 
 unsigned long long Money::getRubles() { return rubles; };
 
 unsigned int Money::getKopecks() { return kopecks; };
+
+void Money::setAmount(unsigned long long rub, unsigned int kop) {
+  if (rub < 0 || kop < 0) {
+    cout << "Incorrect entry, amount can't be negative.\n";
+    return;
+  } else {
+    rubles = rub + kop / 100;
+    kopecks = kop % 100;
+  }
+}
+
+void Money::addAmount(unsigned long long rub, unsigned int kop) {
+  if (rub < 0 || kop < 0) {
+    cout << "Incorrect entry, amount can't be negative.\n";
+    return;
+  } else {
+    rubles += rub + kop / 100;
+    kopecks += kop % 100;
+  }
+}
 
 int main(){
 
