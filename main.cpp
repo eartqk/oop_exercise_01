@@ -24,6 +24,7 @@ public:
   int getKopeks();
   friend Money operator+(Money money1, Money money2);
   friend Money operator-(Money money1, Money money2);
+  friend double operator/(Money money1, Money money2);
 
   Money(unsigned long long a = 0, int b = 0) {
     if (a < 0 && b < 0) {
@@ -76,6 +77,15 @@ Money operator-(Money money1, Money money2) {
   }
   return money;
 };
+
+double operator/(Money money1, Money money2) {
+  if (money2.rubles == 0 && money2.kopecks == 0) {
+    cout << "One of the sums is zero. You can't divide.\n";
+  }
+  unsigned long long money_left = money1.rubles * 100 + money1.kopeks;
+  unsigned long long money_right = money2.rubles * 100 + money2.kopeks;
+  return (money_left * 1.0) / money_right;
+}
 
 void Money::printMoney() { cout << rubles << "," << (int)kopeks; };
 
