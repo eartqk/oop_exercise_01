@@ -21,9 +21,10 @@ private:
 public:
   void printMoney();
   unsigned long long getRubles();
-  int getKopeks();
+  unsigned int getKopeks();
   friend Money operator+(Money money1, Money money2);
   friend Money operator-(Money money1, Money money2);
+  friend Money operator/(Money money1, double number);
   friend double operator/(Money money1, Money money2);
 
   Money(unsigned long long a = 0, int b = 0) {
@@ -78,8 +79,20 @@ Money operator-(Money money1, Money money2) {
   return money;
 };
 
+Money operator/(Money money1, double number) {
+  if (number <= 0) {
+    cout << "You can't divide by zero and negative numbers\n";
+    return money1;
+  }
+  unsigned int value = (money1.rubles * 100 + money1.kopeks) / number;
+  Money money2;
+  money2.rubles = value / 100;
+  money2.kopeks = value % 100;
+  return money2;
+}
+
 double operator/(Money money1, Money money2) {
-  if (money2.rubles == 0 && money2.kopecks == 0) {
+  if (money2.rubles == 0 && money2.kopeks == 0) {
     cout << "One of the sums is zero. You can't divide.\n";
   }
   unsigned long long money_left = money1.rubles * 100 + money1.kopeks;
@@ -91,7 +104,7 @@ void Money::printMoney() { cout << rubles << "," << (int)kopeks; };
 
 unsigned long long Money::getRubles() { return rubles; };
 
-int Money::getKopeks() { return kopeks; };
+unsigned int Money::getKopeks() { return kopeks; };
 
 int main(){
 
