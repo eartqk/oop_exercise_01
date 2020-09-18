@@ -49,8 +49,8 @@ public:
 
 Money operator+(Money money1, Money money2) {
   Money money;
-  money.rubles += money1.getRubles() + money2.getRubles();
-  money.kopeks += money1.getKopeks() + money2.getKopeks();
+  money.rubles += money1.rubles + money2.rubles;
+  money.kopeks += money1.kopeks + money2.kopeks;
   if (money.kopeks >= 100) {
     money.rubles += money.kopeks / 100;
     money.kopeks %= 100;
