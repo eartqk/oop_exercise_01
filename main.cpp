@@ -16,12 +16,12 @@ using namespace std;
 class Money {
 private:
   unsigned long long rubles;
-  unsigned char kopeks;
+  unsigned char kopecks;
 
 public:
   void printMoney();
   unsigned long long getRubles();
-  unsigned int getKopeks();
+  unsigned int getKopecks();
   friend Money operator+(Money money1, Money money2);
   friend Money operator-(Money money1, Money money2);
   friend Money operator/(Money money1, double number);
@@ -41,10 +41,10 @@ public:
               "kopecks.\n";
       b = 0;
     }
-    rubles = a, kopeks = b;
-    if (kopeks >= 100) {
-      rubles += kopeks / 100;
-      kopeks %= 100;
+    rubles = a, kopecks = b;
+    if (kopecks >= 100) {
+      rubles += kopecks / 100;
+      kopecks %= 100;
     }
   };
 };
@@ -52,10 +52,10 @@ public:
 Money operator+(Money money1, Money money2) {
   Money money;
   money.rubles += money1.rubles + money2.rubles;
-  money.kopeks += money1.kopeks + money2.kopeks;
-  if (money.kopeks >= 100) {
-    money.rubles += money.kopeks / 100;
-    money.kopeks %= 100;
+  money.kopecks += money1.kopecks + money2.kopecks;
+  if (money.kopecks >= 100) {
+    money.rubles += money.kopecks / 100;
+    money.kopecks %= 100;
   }
   return money;
 };
@@ -63,17 +63,17 @@ Money operator+(Money money1, Money money2) {
 Money operator-(Money money1, Money money2) {
   Money money;
   if ((money1.rubles < money2.rubles) ||
-      (money1.rubles == money2.rubles && money1.kopeks < money2.kopeks)) {
+      (money1.rubles == money2.rubles && money1.kopecks < money2.kopecks)) {
     cout << "There is not enough money on the first account, the changes will "
             "not be applied.\n";
     return money1;
   } else {
     money.rubles = money1.rubles - money2.rubles;
-    if (money1.kopeks < money2.kopeks) {
+    if (money1.kopecks < money2.kopecks) {
       money.rubles -= 1;
-      money.kopeks = 100 + money1.kopeks - money2.kopeks;
+      money.kopecks = 100 + money1.kopecks - money2.kopecks;
     } else {
-      money.kopeks = money1.kopeks - money2.kopeks;
+      money.kopecks = money1.kopecks - money2.kopecks;
     }
   }
   return money;
@@ -84,27 +84,27 @@ Money operator/(Money money1, double number) {
     cout << "You can't divide by zero and negative numbers.\n";
     return money1;
   }
-  unsigned int value = (money1.rubles * 100 + money1.kopeks) / number;
+  unsigned int value = (money1.rubles * 100 + money1.kopecks) / number;
   Money money2;
   money2.rubles = value / 100;
-  money2.kopeks = value % 100;
+  money2.kopecks = value % 100;
   return money2;
 }
 
 double operator/(Money money1, Money money2) {
-  if (money2.rubles == 0 && money2.kopeks == 0) {
+  if (money2.rubles == 0 && money2.kopecks == 0) {
     cout << "You can't divide by zero.\n";
   }
-  unsigned long long money_left = money1.rubles * 100 + money1.kopeks;
-  unsigned long long money_right = money2.rubles * 100 + money2.kopeks;
+  unsigned long long money_left = money1.rubles * 100 + money1.kopecks;
+  unsigned long long money_right = money2.rubles * 100 + money2.kopecks;
   return (money_left * 1.0) / money_right;
 }
 
-void Money::printMoney() { cout << rubles << "," << (int)kopeks; };
+void Money::printMoney() { cout << rubles << "," << (int)kopecks; };
 
 unsigned long long Money::getRubles() { return rubles; };
 
-unsigned int Money::getKopeks() { return kopeks; };
+unsigned int Money::getKopecks() { return kopecks; };
 
 int main(){
 
