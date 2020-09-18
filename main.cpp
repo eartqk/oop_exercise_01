@@ -23,6 +23,7 @@ public:
   unsigned long long getRubles();
   int getKopeks();
   friend Money operator+(Money money1, Money money2);
+  friend Money operator-(Money money1, Money money2);
 
   Money(unsigned long long a = 0, int b = 0) {
     if (a < 0 && b < 0) {
@@ -38,13 +39,11 @@ public:
               "kopecks.\n";
       b = 0;
     }
-    rubles = 0, kopeks = 0;
-    if (b >= 100) {
-      rubles += b / 100;
-      b = b % 100;
+    rubles = a, kopeks = b;
+    if (kopeks >= 100) {
+      rubles += kopeks / 100;
+      kopeks %= 100;
     }
-    rubles += a;
-    kopeks += b;
   };
 };
 
@@ -59,15 +58,31 @@ Money operator+(Money money1, Money money2) {
   return money;
 };
 
+Money operator-(Money money1, Money money2) {
+  Money money;
+  if ((money1.rubles < money2.rubles) ||
+      (money1.rubles == money2.rubles && money1.kopeks < money2.kopeks)) {
+    cout << "There is not enough money on the first account, the changes will "
+            "not be applied.\n";
+    return money1;
+  } else {
+    money.rubles = money1.rubles - money2.rubles;
+    if (money1.kopeks < money2.kopeks) {
+      money.rubles -= 1;
+      money.kopeks = 100 + money1.kopeks - money2.kopeks;
+    } else {
+      money.kopeks = money1.kopeks - money2.kopeks;
+    }
+  }
+  return money;
+};
+
 void Money::printMoney() { cout << rubles << "," << (int)kopeks; };
 
 unsigned long long Money::getRubles() { return rubles; };
 
 int Money::getKopeks() { return kopeks; };
 
-int main() {
-  Money money1(2000, -900);
-  Money money2(0, 1000);
-  money1 = money1 + money2;
-  money1.printMoney();
+int main(){
+
 };
