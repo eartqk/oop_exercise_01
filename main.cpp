@@ -24,6 +24,7 @@ public:
   unsigned int getKopecks();
   friend Money operator+(Money money1, Money money2);
   friend Money operator-(Money money1, Money money2);
+  friend Money operator*(Money money1, double number);
   friend Money operator/(Money money1, double number);
   friend double operator/(Money money1, Money money2);
 
@@ -78,6 +79,18 @@ Money operator-(Money money1, Money money2) {
   };
   return money;
 };
+
+Money operator*(Money money1, double number) {
+  if (number <= 0) {
+    cout << "You can't multiply by zero and negative numbers.\n";
+    return money1;
+  }
+  unsigned int value = (money1.rubles * 100 + money1.kopecks) * number;
+  Money money2;
+  money2.rubles = value / 100;
+  money2.kopecks = value % 100;
+  return money2;
+}
 
 Money operator/(Money money1, double number) {
   if (number <= 0) {
