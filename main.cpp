@@ -81,7 +81,7 @@ Money operator-(Money money1, Money money2) {
 
 Money operator/(Money money1, double number) {
   if (number <= 0) {
-    cout << "You can't divide by zero and negative numbers\n";
+    cout << "You can't divide by zero and negative numbers.\n";
     return money1;
   }
   unsigned int value = (money1.rubles * 100 + money1.kopeks) / number;
@@ -93,7 +93,7 @@ Money operator/(Money money1, double number) {
 
 double operator/(Money money1, Money money2) {
   if (money2.rubles == 0 && money2.kopeks == 0) {
-    cout << "One of the sums is zero. You can't divide.\n";
+    cout << "You can't divide by zero.\n";
   }
   unsigned long long money_left = money1.rubles * 100 + money1.kopeks;
   unsigned long long money_right = money2.rubles * 100 + money2.kopeks;
