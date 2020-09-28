@@ -176,7 +176,9 @@ void help() {
           "amount "
           "manually.\n2 - Add money to exists account.\n3 - Withdraw money "
           "from an existing account.\n4 - To print amount.\n5 - Compare "
-          "exists account to custom amount.\n";
+          "exists account to custom amount.\n6 - Multiply the amount by a "
+          "fractional number.\n7 - Divide the amount by a fractional number.\n"
+          "8 - Divide the amount by another amount.\n";
 };
 
 int main() {
@@ -184,6 +186,7 @@ int main() {
   Money temp_money(0, 0);
   unsigned long long rubs = 0;
   unsigned int kops = 0;
+  double number = 1;
   cout << "Created account with empty balance.\n";
   int select = 0;
   help();
@@ -246,6 +249,37 @@ int main() {
         cout << "The existing amount is less than the entered amount.\n";
       };
       setAmount(temp_money, 0, 0);
+      break;
+    case 6:
+      cout << "Enter the number to multiply exists amount: ";
+      cin >> number;
+      if (number > 100) {
+        cout << "Numer is too large.\n";
+      } else {
+        money = money * number;
+      }
+      number = 1;
+      break;
+    case 7:
+      cout << "Enter the number to divide exists amount: ";
+      cin >> number;
+      if (number < 0.001) {
+        cout << "Number is too small.\n";
+      } else {
+        money = money / number;
+      }
+      number = 1;
+      break;
+    case 8:
+      cout << "\nDividing the amount by the entered amount.\nEnter a rubles: ";
+      cin >> rubs;
+      cout << "Enter a kopecks: ";
+      cin >> kops;
+      setAmount(temp_money, rubs, kops);
+      number = money / temp_money;
+      cout << "The amount refers to the amount entered as " << number << endl;
+      setAmount(temp_money, 0, 0);
+      number = 1;
       break;
     default:
       cout << "Unknown command.\n";
