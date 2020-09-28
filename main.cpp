@@ -22,8 +22,8 @@ public:
   void printMoney();
   unsigned long long getRubles();
   unsigned int getKopecks();
-  void setAmount(unsigned long long rubles, unsigned int kopecks);
-  void addAmount(unsigned long long rub, unsigned int kop);
+  friend void setAmount(Money &money, long long rubles, int kopecks);
+  friend void addAmount(Money &money, long long rubles, int kopecks);
   friend bool operator==(Money money1, Money money2);
   friend bool operator!=(Money money1, Money money2);
   friend bool operator>(Money money1, Money money2);
@@ -153,26 +153,71 @@ unsigned long long Money::getRubles() { return rubles; };
 
 unsigned int Money::getKopecks() { return kopecks; };
 
-void Money::setAmount(unsigned long long rub, unsigned int kop) {
-  if (rub < 0 || kop < 0) {
+void setAmount(Money &money, long long rubles, int kopecks) {
+  if (rubles < 0 || kopecks < 0) {
     cout << "Incorrect entry, amount can't be negative.\n";
-    return;
   } else {
-    rubles = rub + kop / 100;
-    kopecks = kop % 100;
-  }
-}
+    money.rubles = rubles + kopecks / 100;
+    money.kopecks = kopecks % 100;
+  };
+};
 
-void Money::addAmount(unsigned long long rub, unsigned int kop) {
-  if (rub < 0 || kop < 0) {
+void addAmount(Money &money, long long rubles, int kopecks) {
+  if (rubles < 0 || kopecks < 0) {
     cout << "Incorrect entry, amount can't be negative.\n";
-    return;
   } else {
-    rubles += rub + kop / 100;
-    kopecks += kop % 100;
-  }
-}
+    money.rubles += rubles + kopecks / 100;
+    money.kopecks += kopecks % 100;
+  };
+};
 
-int main(){
+void help() {
+  cout << "Menu:\n-1 - To exit.\n0 - To print this information.\n1 - To set "
+          "amount "
+          "manually.\n2 - To add money to exists account.\n3 - To print "
+          "amount.\n";
+};
 
+int main() {
+  Money money(0, 0);
+  Money temp_money(0, 0);
+  unsigned long long rubs = 0;
+  unsigned int kops = 0;
+  cout << "Created account with empty balance.\n";
+  int select = 0;
+  help();
+  while (select != -1) {
+    cin >> select;
+    cin.clear();
+    cin.ignore(10000, '\n');
+    rubs = 0;
+    kops = 0;
+    switch (select) {
+    case -1:
+      break;
+    case 0:
+      help();
+      break;
+    case 1:
+      cout << "\nSetting new amount.\nEnter a rubles: ";
+      cin >> rubs;
+      cout << "Enter a kopecks: ";
+      cin >> kops;
+      setAmount(money, rubs, kops);
+      break;
+    case 2:
+      cout << "\nAdding amount to exists account.\nEnter a rubles: ";
+      cin >> rubs;
+      cout << "Enter a kopecks: ";
+      cin >> kops;
+      addAmount(money, rubs, kops);
+      break;
+    case 3:
+      money.printMoney();
+      break;
+    default:
+      cout << "Unknown command.\n";
+      break;
+    };
+  };
 };
