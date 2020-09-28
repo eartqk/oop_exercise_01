@@ -210,7 +210,9 @@ int main() {
       cin >> rubs;
       cout << "Enter a kopecks: ";
       cin >> kops;
-      addAmount(money, rubs, kops);
+      setAmount(temp_money, rubs, kops);
+      money = money + temp_money;
+      setAmount(temp_money, 0, 0);
       break;
     case 3:
       money.printMoney();
