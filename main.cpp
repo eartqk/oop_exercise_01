@@ -174,8 +174,9 @@ void addAmount(Money &money, long long rubles, int kopecks) {
 void help() {
   cout << "Menu:\n-1 - To exit.\n0 - To print this information.\n1 - To set "
           "amount "
-          "manually.\n2 - To add money to exists account.\n3 - To print "
-          "amount.\n4 - Compare exists account to custom amount.\n";
+          "manually.\n2 - Add money to exists account.\n3 - Withdraw money "
+          "from an existing account.\n4 - To print amount.\n5 - Compare "
+          "exists account to custom amount.\n";
 };
 
 int main() {
@@ -215,9 +216,23 @@ int main() {
       setAmount(temp_money, 0, 0);
       break;
     case 3:
-      money.printMoney();
+      cout << "\nSubtracting from an existing amount.\nEnter a rubles: ";
+      cin >> rubs;
+      cout << "Enter a kopecks: ";
+      cin >> kops;
+      setAmount(temp_money, rubs, kops);
+      if (money < temp_money) {
+        cout << "The existing amount is less than the entered amount. The "
+                "changes are not applied\n";
+      } else {
+        money = money - temp_money;
+      }
+      setAmount(temp_money, 0, 0);
       break;
     case 4:
+      money.printMoney();
+      break;
+    case 5:
       cout << "\nEnter temporary amount.\nEnter a rubles: ";
       cin >> rubs;
       cout << "Enter a kopecks: ";
