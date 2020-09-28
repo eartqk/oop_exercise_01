@@ -175,7 +175,7 @@ void help() {
   cout << "Menu:\n-1 - To exit.\n0 - To print this information.\n1 - To set "
           "amount "
           "manually.\n2 - To add money to exists account.\n3 - To print "
-          "amount.\n";
+          "amount.\n4 - Compare exists account to custom amount.\n";
 };
 
 int main() {
@@ -214,6 +214,21 @@ int main() {
       break;
     case 3:
       money.printMoney();
+      break;
+    case 4:
+      cout << "\nEnter temporary amount.\nEnter a rubles: ";
+      cin >> rubs;
+      cout << "Enter a kopecks: ";
+      cin >> kops;
+      setAmount(temp_money, rubs, kops);
+      if (money == temp_money) {
+        cout << "The amounts are equal.\n";
+      } else if (money > temp_money) {
+        cout << "The existing amount is greater than the entered amount.\n";
+      } else {
+        cout << "The existing amount is less than the entered amount.\n";
+      };
+      setAmount(temp_money, 0, 0);
       break;
     default:
       cout << "Unknown command.\n";
